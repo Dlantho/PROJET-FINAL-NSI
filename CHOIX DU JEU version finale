@@ -1,0 +1,55 @@
+"""
+importation de tous ce qu'il faut continuer a la ligne 115
+"""
+import sys
+import time
+import os
+
+from tkinter import messagebox
+from tkinter.messagebox import *
+
+from math import *
+from tkinter import *
+
+from random import randrange
+from math import ceil
+
+
+
+
+class choix_dujeu :
+    print("            \033[1;35;40mBienvenue, choisissez votre jeu ! ")
+    print("-"*60+" ")
+    print("    \033[1;32;40mJeu1 : Roulette    \033[1;31;40mJeu2: Black Jack   " )
+    print ("   ")
+    jeu = input("      \033[1;33;40mChoisissez votre jeu/1/2 : ")
+    try :
+
+        jeu = int(jeu)
+
+    except ValueError:
+
+        print("                                                        ")
+        print("Erreur, veuillez rentrer 1 ou 2")
+        jeu = 0
+
+    if jeu == 1 :
+        print("                                                        ")
+        print("     \033[1;34;40mRoulette choisie, ouverture du jeu... ")
+
+
+    elif jeu > 2 :
+
+        print("                                                        ")
+        print("Erreur, veuillez rentrer 1 ou 2")
+
+    else :
+
+        if jeu == 2 :
+            print("                                                        ")
+            print("     \033[1;34;40mBlack Jack choisi, ouverture du jeu...")
+
+    time.sleep(1)
+
+
+
