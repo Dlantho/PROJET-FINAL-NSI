@@ -1,0 +1,292 @@
+import os
+import random
+import time
+
+
+
+
+import sys
+import time
+
+from math import *
+
+
+class ProgressBar:
+
+    """
+    Barre de progrssion
+    """
+
+    def __init__(self, steps, maxbar=100, title='\033[1;39;40mChargement du programme'):
+        if steps <= 0 or maxbar <= 0 or maxbar > 200:
+            raise ValueError
+
+        self.steps = steps
+        self.maxbar = maxbar
+        self.title = title
+
+        self.perc = 0
+        self._completed_steps = 0
+
+        self.update(False)
+
+    def update(self, increase=True):
+        if increase:
+            self._completed_steps += 0.5
+
+        self.perc = floor(self._completed_steps / self.steps * 100)
+
+        if self._completed_steps > self.steps:
+            self._completed_steps = self.steps
+
+        steps_bar = floor(self.perc / 100 * self.maxbar)
+
+        if steps_bar == 0:
+            visual_bar = self.maxbar * ' '
+        else:
+            visual_bar = (steps_bar - 1) * '=' + '>' + (self.maxbar - steps_bar) * ' '
+
+        sys.stdout.write('\r' + self.title + ' [' + visual_bar + '] ' + str(self.perc) + '%')
+        sys.stdout.flush()
+
+
+if __name__ == '__main__':
+    bar = ProgressBar(50)
+
+    i = 0
+    while bar.perc != 100:
+        bar.update()
+        time.sleep(0.05)
+
+        i += 1
+
+
+time.sleep(1)
+print("                                       \033[1;35;40mBienvenue, choisissez votre jeu ! ")
+print("-"*60+" ")
+print("    \033[1;32;40mJeu1 : Roulette    \033[1;31;40mJeu2: Black Jack   " )
+print ("   ")
+jeu = input("      \033[1;33;40mChoisissez votre jeu/1/2 : ")
+try :
+
+    jeu = int(jeu)
+
+except ValueError:
+
+    print("                                                        ")
+    print("Erreur, veuillez rentrer 1 ou 2")
+    jeu = 0
+
+if jeu == 1 :
+    print("                                                        ")
+    print("     \033[1;34;40mRoulette choisie, ouverture du jeu... ")
+
+
+elif jeu > 2 :
+
+    print("                                                        ")
+    print("Erreur, veuillez rentrer 1 ou 2")
+
+else :
+
+    if jeu == 2 :
+        print("                                                        ")
+        print("     \033[1;34;40mBlack Jack choisi, ouverture du jeu...")
+
+time.sleep(1)
+
+if jeu == 2 :
+
+
+
+        class Regles :
+
+            time.sleep(0.5)
+
+            print("                                                        ")
+            print("Bienvenue dans le black jack, réalisé par Mathéo BALESTER, Julien ASTRE, Dylan FOURNIER et Anthony DUALE")
+            print("                                                        ")
+
+            régles = input("tappez HELP si vous voulez lire les règles et ne tappez rien si vous les connaissez déjà. : ")
+            try :
+
+                régles = int(régles)
+
+            except ValueError:
+                print(" ")
+
+            if régles == "HELP" :
+
+                print("Bienvenue au BlackJack, pour gagner, il faut avoir la somme de la valeur de ses carte à 21, si vous dépassez vous avez perdu ! le V équivaut au vallet, le D à la dame et le R au roi. Ces 3 cartes valent 1à points, un 2 vaut 2 points, un 3 vaut 3 etc... ")
+                time.sleep(4)
+                print("Miser = Tirer une autre carte pour s'approcher de 21, Rester = Garder sa main et ne pas prendre de risques et Quitter = Arrêter de jouer ")
+                time.sleep(3)
+
+            else :
+                régles == 4
+
+        decks = input("Entrez le nombre de deck a utiliser : ")
+
+        # choix de decks
+        deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]*(int(decks)*4)
+
+        # initialisation scores
+        VICTOIRES = 0
+        Défaites = 0
+
+        def deal(deck):
+            hand = []
+            for i in range(2):
+                random.shuffle(deck)
+                card = deck.pop()
+                if card == 11:card = "V"
+                if card == 12:card = "D"
+                if card == 13:card =  "R"
+                if card == 14:card = "A"
+                hand.append(card)
+            return hand
+
+        def play_again():
+            again = input("Voulez vous rejouer ? (O/N) : ").lower()
+            if again == "o":
+                dealer_hand = []
+                player_hand = []
+                deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]*4
+                game()
+            else:
+                print("Au revoir !")
+                exit()
+
+        def total(hand):
+            total = 0
+            for card in hand:
+                if card == "V" or card == "D" or card ==  "R":
+                    total+= 10
+                elif card == "A":
+                    if total >= 11: total+= 1
+                    else: total+= 11
+                else: total += card
+            return total
+
+        def hit(hand):
+            card = deck.pop()
+            if card == 11:card = "V"
+            if card == 12:card = "D"
+            if card == 13:card =  "R"
+            if card == 14:card = "A"
+            hand.append(card)
+            return hand
+
+        def clear():
+            if os.name == 'nt':
+                os.system('CLS')
+            if os.name == 'posix':
+                os.system('clear')
+
+        def print_results(dealer_hand, player_hand):
+            clear()
+
+            print("                                                        ")
+            print("              Victoire/Défaites : ")
+            print("-"*30+" ")
+            print("    \033[1;32;40mVictoires:  \033[1;37;40m%s   \033[1;31;40mDéfaites:  \033[1;37;40m%s " % (VICTOIRES, Défaites))
+            print("-"*30+" ")
+            print("                                                        ")
+            print ("Le dealer montre un  " + str(dealer_hand) + "Pour un total de  " + str(total(dealer_hand)))
+            print ("Vous avez  " + str(player_hand) + " Pour un total de  " + str(total(player_hand)))
+
+        def blackjack(dealer_hand, player_hand):
+            global VICTOIRES
+            global Défaites
+            if total(player_hand) == 21:
+                print_results(dealer_hand, player_hand)
+                time.sleep(1)
+                print ("Félicitation ! vous avez obtenu un BlackJack! ")
+                VICTOIRES += 1
+                play_again()
+            elif total(dealer_hand) == 21:
+                print_results(dealer_hand, player_hand)
+                time.sleep(1)
+                print ("Désolé vous avez perdu ! Le dealer a obtenu un BlackJack. ")
+                Défaites += 1
+                play_again()
+
+        def score(dealer_hand, player_hand):
+                # score
+                global VICTOIRES
+                global Défaites
+                if total(player_hand) == 21:
+                    print_results(dealer_hand, player_hand)
+                    time.sleep(1)
+                    print ("Félicitation ! vous avez obtenu un BlackJack! ")
+                    VICTOIRES += 1
+                elif total(dealer_hand) == 21:
+                    print_results(dealer_hand, player_hand)
+                    time.sleep(1)
+                    print ("Désolé vous avez perdu ! Le dealer a obtenu un BlackJack. ")
+                    Défaites += 1
+                elif total(player_hand) > 21:
+                    print_results(dealer_hand, player_hand)
+                    time.sleep(1)
+                    print ("Désolé vous avez dépassé donc vous avez perdu. ")
+                    Défaites += 1
+                elif total(dealer_hand) > 21:
+                    print_results(dealer_hand, player_hand)
+                    time.sleep(1)
+                    print ("Le dealer a perdu.  Vous avez gagné ! ")
+                    VICTOIRES += 1
+                elif total(player_hand) < total(dealer_hand):
+                    print_results(dealer_hand, player_hand)
+                    time.sleep(1)
+                    print ("Désolé votre score n'est pas aussi haut que celui du dealer. Vous avez perdu !' ")
+                    Défaites += 1
+                elif total(player_hand) > total(dealer_hand):
+                    print_results(dealer_hand, player_hand)
+                    time.sleep(1)
+                    print ("Félicitations votre score est plus haut que celui du dealer. vous avez gagné ! ")
+                    VICTOIRES += 1
+
+        def game():
+            global VICTOIRES
+            global Défaites
+            choice = 0
+            clear()
+            print("      ")
+            time.sleep(1)
+            print("-"*30+" ")
+            print("    \033[1;32;40mVICTOIRES:  \033[1;37;40m%s   \033[1;31;40mDéfaites:  \033[1;37;40m%s " % (VICTOIRES, Défaites))
+            print("-"*30+" ")
+            dealer_hand = deal(deck)
+            player_hand = deal(deck)
+            print ("Le dealer montre un  " + str(dealer_hand[0]))
+            time.sleep(2)
+            print ("Vous avez un  " + str(player_hand) + " pour un total de  " + str(total(player_hand)))
+            blackjack(dealer_hand, player_hand)
+            quit=False
+            while not quit:
+                choice = input("Vous voulez [M]iser, [R]ester, ou [Q]uitter: ").lower()
+                if choice == 'm':
+                    hit(player_hand)
+                    print(player_hand)
+                    print("total de la main : " + str(total(player_hand)))
+                    if total(player_hand)>21:
+                        print('vous avez dépassé')
+                        Défaites += 1
+                        play_again()
+                elif choice=='r':
+                    while total(dealer_hand)<17:
+                        hit(dealer_hand)
+                        print(dealer_hand)
+                        if total(dealer_hand)>21:
+                            time.sleep(1)
+                            print('Le dealer a dépassé. Vous avez gagné !')
+                            VICTOIRES += 1
+                            play_again()
+                    score(dealer_hand,player_hand)
+                    play_again()
+                elif choice == "q":
+                    print("Au-revoir !")
+                    quit=True
+                    exit()
+        if __name__ == "__main__" :
+            game()
