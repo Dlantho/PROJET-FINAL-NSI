@@ -246,7 +246,7 @@ if jeu == 1 :
 
             else :
 
-                if quitter == ("Tondaron"):
+                if quitter == ("nsi2021"):
 
                     time.sleep(1)
                     print ("code bon, votre cagnotte passe à 2000€" )
